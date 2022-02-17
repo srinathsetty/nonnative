@@ -6,8 +6,8 @@ use ark_std::UniformRand;
 
 #[test]
 fn from_test() {
-    type F = ark_bls12_377::Fr;
-    type CF = ark_bls12_377::Fq;
+    type F = ark_pallas::Fr;
+    type CF = ark_pallas::Fq;
 
     let mut rng = ark_std::test_rng();
     let cs = ConstraintSystem::<CF>::new_ref();

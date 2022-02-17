@@ -1,10 +1,4 @@
-use ark_bls12_381::Bls12_381;
-use ark_ec::PairingEngine;
 use ark_ff::{BigInteger, PrimeField};
-use ark_mnt4_298::MNT4_298;
-use ark_mnt4_753::MNT4_753;
-use ark_mnt6_298::MNT6_298;
-use ark_mnt6_753::MNT6_753;
 
 use ark_nonnative_field::{AllocatedNonNativeFieldVar, NonNativeFieldVar};
 use ark_r1cs_std::{alloc::AllocVar, eq::EqGadget, fields::FieldVar, R1CSVar};
@@ -663,51 +657,5 @@ macro_rules! nonnative_test {
     };
 }
 
-nonnative_test!(
-    MNT46Small,
-    <MNT4_298 as PairingEngine>::Fr,
-    <MNT6_298 as PairingEngine>::Fr
-);
-nonnative_test!(
-    MNT64Small,
-    <MNT6_298 as PairingEngine>::Fr,
-    <MNT4_298 as PairingEngine>::Fr
-);
-nonnative_test!(
-    MNT46Big,
-    <MNT4_753 as PairingEngine>::Fr,
-    <MNT6_753 as PairingEngine>::Fr
-);
-nonnative_test!(
-    MNT64Big,
-    <MNT6_753 as PairingEngine>::Fr,
-    <MNT4_753 as PairingEngine>::Fr
-);
-nonnative_test!(
-    BLS12MNT4Small,
-    <Bls12_381 as PairingEngine>::Fr,
-    <MNT4_298 as PairingEngine>::Fr
-);
-nonnative_test!(
-    BLS12,
-    <Bls12_381 as PairingEngine>::Fq,
-    <Bls12_381 as PairingEngine>::Fr
-);
-#[cfg(not(ci))]
-nonnative_test!(
-    MNT6BigMNT4Small,
-    <MNT6_753 as PairingEngine>::Fr,
-    <MNT4_298 as PairingEngine>::Fr
-);
-nonnative_test!(
-    PallasFrMNT6Fr,
-    ark_pallas::Fr,
-    <MNT6_753 as PairingEngine>::Fr
-);
-nonnative_test!(
-    MNT6FrPallasFr,
-    <MNT6_753 as PairingEngine>::Fr,
-    ark_pallas::Fr
-);
 nonnative_test!(PallasFqFr, ark_pallas::Fq, ark_pallas::Fr);
 nonnative_test!(PallasFrFq, ark_pallas::Fr, ark_pallas::Fq);

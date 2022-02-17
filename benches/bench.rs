@@ -225,11 +225,6 @@ macro_rules! nonnative_bench {
 }
 
 fn main() {
-    nonnative_bench!(MNT46Small, ark_mnt4_298::Fr, ark_mnt6_298::Fr);
-    nonnative_bench!(MNT64Small, ark_mnt6_298::Fr, ark_mnt4_298::Fr);
-    nonnative_bench!(MNT46Big, ark_mnt4_753::Fr, ark_mnt6_753::Fr);
-    nonnative_bench!(MNT64Big, ark_mnt6_753::Fr, ark_mnt4_753::Fr);
-    nonnative_bench!(BLS12MNT4Small, ark_bls12_381::Fr, ark_mnt4_298::Fr);
-    nonnative_bench!(BLS12, ark_bls12_381::Fq, ark_bls12_381::Fr);
-    nonnative_bench!(MNT6BigMNT4Small, ark_mnt6_753::Fr, ark_mnt4_298::Fr);
+    nonnative_bench!(PallsOnVesta, ark_pallas::Fr, ark_pallas::Fq);
+    nonnative_bench!(VestaOnPallas, ark_pallas::Fq, ark_pallas::Fr);
 }

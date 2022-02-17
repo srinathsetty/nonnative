@@ -42,7 +42,6 @@ derivative = { version = "2", features = [ "use_core" ] }
 tracing = { version = "0.1", default-features = false, features = [ "attributes" ] }
 
 ark-ff = { version = "^0.3.0", default-features = false }
-ark-ec = { version = "^0.3.0", default-features = false }
 ark-std = { version = "^0.3.0", default-features = false }
 ark-relations = { version = "^0.3.0", default-features = false }
 ark-r1cs-std = { version = "^0.3.0", default-features = false  }
@@ -53,17 +52,10 @@ num-integer = { version = "0.1.44", default-features = false }
 
 [dev-dependencies]
 paste = "1.0"
-ark-bls12-377 = { version = "^0.3.0", features = ["curve"], default-features = false  }
-ark-bls12-381 = { version = "^0.3.0", features = ["curve"], default-features = false  }
-ark-mnt4-298 = { version = "^0.3.0", features = ["curve"], default-features = false  }
-ark-mnt4-753 = { version = "^0.3.0", features = ["curve"], default-features = false  }
-ark-mnt6-298 = { version = "^0.3.0", default-features = false  }
-ark-mnt6-753 = { version = "^0.3.0", default-features = false  }
 ark-pallas = { version = "^0.3.0", features = ["curve"],  default-features = false  }
 
 [features]
 default = []
-std = [ "ark-std/std", "ark-ff/std", "ark-ec/std", "ark-relations/std", "ark-r1cs-std/std", "num-traits/std", "num-bigint/std" ]
 
 [[bench]]
 name = "nonnative-bench"
