@@ -355,65 +355,6 @@ impl<TargetField: PrimeField, BaseField: PrimeField> CondSelectGadget<BaseField>
     }
 }
 
-/// Uses two bits to perform a lookup into a table
-/// `b` is little-endian: `b[0]` is LSB.
-impl<TargetField: PrimeField, BaseField: PrimeField> TwoBitLookupGadget<BaseField>
-    for NonNativeFieldVar<TargetField, BaseField>
-{
-    type TableConstant = TargetField;
-
-    #[tracing::instrument(target = "r1cs")]
-    fn two_bit_lookup(b: &[Boolean<BaseField>], c: &[Self::TableConstant]) -> R1CSResult<Self> {
-        debug_assert_eq!(b.len(), 2);
-        debug_assert_eq!(c.len(), 4);
-        if b.cs().is_none() {
-            // We're in the constant case
-
-            let lsb = b[0].value()? as usize;
-            let msb = b[1].value()? as usize;
-            let index = lsb + (msb << 1);
-            Ok(Self::Constant(c[index]))
-        } else {
-            AllocatedNonNativeFieldVar::two_bit_lookup(b, c).map(Self::Var)
-        }
-    }
-}
-
-impl<TargetField: PrimeField, BaseField: PrimeField> ThreeBitCondNegLookupGadget<BaseField>
-    for NonNativeFieldVar<TargetField, BaseField>
-{
-    type TableConstant = TargetField;
-
-    #[tracing::instrument(target = "r1cs")]
-    fn three_bit_cond_neg_lookup(
-        b: &[Boolean<BaseField>],
-        b0b1: &Boolean<BaseField>,
-        c: &[Self::TableConstant],
-    ) -> R1CSResult<Self> {
-        debug_assert_eq!(b.len(), 3);
-        debug_assert_eq!(c.len(), 4);
-
-        if b.cs().or(b0b1.cs()).is_none() {
-            // We're in the constant case
-
-            let lsb = b[0].value()? as usize;
-            let msb = b[1].value()? as usize;
-            let index = lsb + (msb << 1);
-            let intermediate = c[index];
-
-            let is_negative = b[2].value()?;
-            let y = if is_negative {
-                -intermediate
-            } else {
-                intermediate
-            };
-            Ok(Self::Constant(y))
-        } else {
-            AllocatedNonNativeFieldVar::three_bit_cond_neg_lookup(b, b0b1, c).map(Self::Var)
-        }
-    }
-}
-
 impl<TargetField: PrimeField, BaseField: PrimeField> AllocVar<TargetField, BaseField>
     for NonNativeFieldVar<TargetField, BaseField>
 {
